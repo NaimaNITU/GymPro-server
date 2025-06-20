@@ -46,7 +46,6 @@ const gymproCollection = client.db("gymproDB").collection("gympro");
 app.post("/schedule",async(req,res)=>{
   const result = await gymproCollection.insertOne(req.body);
   res.send(result);
- 
 })
 
 //get data from api
@@ -60,6 +59,26 @@ app.delete("/schedule/:id",async(req,res)=>{
   const id=req.params.id;
   const query={_id: new ObjectId(id)};
   const result=await gymproCollection.deleteOne(query);
+  res.send(result);
+})
+
+
+//get specific data from api
+app.get("/schedule/:id",async(req,res)=>{
+  const id=req.params.id;
+  const query={_id: new ObjectId(id)};
+  const result=await gymproCollection.findOne(query);
+  res.send(result);
+})
+
+//update data from api
+app.put("/schedule/:id",async(req,res)=>{
+  const id=req.params.id;
+  const query={_id: new ObjectId(id)};
+  const updateDoc={
+    $set:req.body
+  }
+  const result=await gymproCollection.updateOne(query,updateDoc);
   res.send(result);
 })
 
